@@ -67,3 +67,11 @@ export const SHOW_IN_FOLDER = {
     contextMenu.showInFolder()
   }
 }
+
+export const REMINDER = {
+  label: 'Reminder',
+  id: 'renameMenuItem',
+  click (menuItem, browserWindow) {
+    contextMenu.rename()
+  }
+}

@@ -13,6 +13,9 @@ export const sideBarIcons = [
   }, {
     name: 'toc',
     icon: TocIcon
+  }, {
+    name: 'reminder',
+    icon: TocIcon
   }
 ]
 
