@@ -101,7 +101,7 @@ export default {
     this.FindWordIcon = FindWordIcon
     this.FindRegexIcon = FindRegexIcon
     return {
-      keyword: '',
+      keyword: this.lastSearchTime.toLocaleDateString(),
       searchResult: [],
       searcherRunning: false,
       showSearchCancelArea: false,
@@ -288,6 +288,9 @@ export default {
     openFolder () {
       this.$store.dispatch('ASK_FOR_OPEN_PROJECT')
     }
+  },
+  created () { // 在组件初始化的时候执行，只执行一次
+    this.search()
   }
 }
 </script>

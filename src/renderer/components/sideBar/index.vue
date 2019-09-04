@@ -43,9 +43,9 @@
       <toc
         v-else-if="rightColumn === 'toc'"
       ></toc>
-      <toc
+      <side-bar-search
         v-else-if="rightColumn === 'reminder'"
-      ></toc>
+      ></side-bar-search>
     </div>
     <div class="drag-bar" ref="dragBar" v-show="rightColumn"></div>
   </div>
