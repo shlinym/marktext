@@ -507,7 +507,15 @@ const actions = {
       })
 
       if (addBlankTab) {
-        dispatch('NEW_UNTITLED_TAB', {})
+        var curDate = new Date()
+        var markdown = ['---\n',
+          'tag: ',
+          'Review_need: Fasle',
+          'Review_date: ' + curDate.toLocaleDateString(),
+          'Review_times: 1',
+          '---\n'].join('\n')
+
+        dispatch('NEW_UNTITLED_TAB', { markdown, selected: true })
       } else if (markdownList.length) {
         let isFirst = true
         for (const markdown of markdownList) {
@@ -532,6 +540,15 @@ const actions = {
 
     ipcRenderer.on('mt::new-untitled-tab', (e, selected = true, markdown = '') => {
       // Create a blank tab
+      var curDate = new Date()
+
+      markdown = ['---\n',
+        'tag: ',
+        'Review_need: Fasle',
+        'Review_date: ' + curDate.toLocaleDateString(),
+        'Review_times: 1',
+        '---\n'].join('\n')
+
       dispatch('NEW_UNTITLED_TAB', { markdown, selected })
     })
   },

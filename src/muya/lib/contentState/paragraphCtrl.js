@@ -450,8 +450,6 @@ const paragraphCtrl = ContentState => {
 
     switch (paraType) {
       case 'front-matter': {
-        alert('xzvx')
-        console.warn('xvxz')
         var nodeConsole = require('console')
         var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
         myConsole.log('Hello World!')
