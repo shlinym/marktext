@@ -497,6 +497,7 @@ const actions = {
       commit('SET_LAYOUT', {
         rightColumn: 'files',
         showSideBar: !!sideBarVisibility,
+        // showSideBar: true,
         showTabBar: !!tabBarVisibility
       })
       dispatch('SET_LAYOUT_MENU_ITEM')

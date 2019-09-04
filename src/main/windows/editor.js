@@ -58,6 +58,10 @@ class EditorWindow extends BaseWindow {
       tabBarVisibility,
       sourceCodeModeEnabled
     } = preferences.getAll()
+    var nodeConsole = require('console')
+    var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
+    myConsole.log(sideBarVisibility)
+    myConsole.log(!!sideBarVisibility)
     if (!isOsx) {
       winOptions.titleBarStyle = 'default'
       if (titleBarStyle === 'native') {
@@ -87,7 +91,7 @@ class EditorWindow extends BaseWindow {
         addBlankTab,
         markdownList: this._markdownToOpen,
         lineEnding,
-        sideBarVisibility,
+        sideBarVisibility: true,
         tabBarVisibility,
         sourceCodeModeEnabled
       })

@@ -35,7 +35,7 @@
 
   "theme": "light",
 
-  "sideBarVisibility": false,
+  "sideBarVisibility": true,
   "tabBarVisibility": false,
   "sourceCodeModeEnabled": false,
 
