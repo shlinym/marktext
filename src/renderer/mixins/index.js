@@ -51,18 +51,25 @@ export const fileMixins = {
         }
       }
 
+      var nodeConsole = require('console')
+      var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
       if (openedTab) {
         openedTab.cursor = cursor
         if (this.currentFile !== openedTab) {
+          myConsole.log(openedTab.markdown)
           this.$store.dispatch('UPDATE_CURRENT_FILE', openedTab)
         } else {
+          myConsole.log(this.currentFile.markdown)
           const { id, markdown, cursor, history } = this.currentFile
           bus.$emit('file-changed', { id, markdown, cursor, renderCursor: true, history })
         }
       } else {
+        myConsole.log('fsfs')
+        myConsole.log(this.currentFile.markdown)
         ipcRenderer.send('mt::open-file', filePath, {
           cursor
         })
+        myConsole.log(this.currentFile.markdown)
       }
     },
     handleSearchResultMenu (event) {
