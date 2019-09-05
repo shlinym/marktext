@@ -17,7 +17,7 @@
           @click.stop="toggleSearchMatches()"
         >
           <div class="title">
-            <span class="filename">{{ filename + extension }}</span>
+            <span class="filename" @contextmenu="handleSearchResultMenu">{{ filename + extension }}</span>
             <span class="match-count">{{ matchCount }}</span>
           </div>
           <!-- <div class="folder-path">
@@ -65,7 +65,8 @@ export default {
   mixins: [fileMixins],
   data () {
     return {
-      showSearchMatches: this.searchResult.matches.length <= 20,
+      // showSearchMatches: this.searchResult.matches.length <= 20,
+      showSearchMatches: false,
       allMatchesShown: this.searchResult.matches.length <= 10,
       shownMatches: 10
     }
