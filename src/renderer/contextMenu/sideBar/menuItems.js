@@ -68,9 +68,17 @@ export const SHOW_IN_FOLDER = {
   }
 }
 
-export const REMINDER = {
-  label: 'Reminder',
-  id: 'renameMenuItem',
+export const REVIEWED = {
+  label: 'had reviewed',
+  id: 'reviewed',
+  click (menuItem, browserWindow) {
+    contextMenu.rename()
+  }
+}
+
+export const REVIEW_LATER = {
+  label: 'do it later',
+  id: 'reviewedLater',
   click (menuItem, browserWindow) {
     contextMenu.rename()
   }

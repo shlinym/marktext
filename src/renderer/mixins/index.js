@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron'
 import { isSamePathSync } from 'common/filesystem/paths'
 import bus from '../bus'
-import { showContextMenu } from '../contextMenu/sideBar'
+import { showReminderMenu } from '../contextMenu/sideBar'
 
 export const tabsMixins = {
   methods: {
@@ -66,7 +66,7 @@ export const fileMixins = {
       }
     },
     handleSearchResultMenu (event) {
-      showContextMenu(event, true)
+      showReminderMenu(event)
     },
     handleFileClick () {
       const { isMarkdown, pathname } = this.file

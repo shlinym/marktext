@@ -9,7 +9,8 @@ import {
   RENAME,
   DELETE,
   SHOW_IN_FOLDER,
-  REMINDER
+  REVIEWED,
+  REVIEW_LATER
 } from './menuItems'
 
 const { Menu, MenuItem } = remote
@@ -28,11 +29,24 @@ export const showContextMenu = (event, hasPathCache) => {
     RENAME,
     DELETE,
     SEPARATOR,
-    SHOW_IN_FOLDER,
-    REMINDER
+    SHOW_IN_FOLDER
   ]
 
   PASTE.enabled = hasPathCache
+
+  CONTEXT_ITEMS.forEach(item => {
+    menu.append(new MenuItem(item))
+  })
+  menu.popup({ window: win, x: event.clientX, y: event.clientY })
+}
+
+export const showReminderMenu = (event) => {
+  const menu = new Menu()
+  const win = remote.getCurrentWindow()
+  const CONTEXT_ITEMS = [
+    REVIEWED,
+    REVIEW_LATER
+  ]
 
   CONTEXT_ITEMS.forEach(item => {
     menu.append(new MenuItem(item))
