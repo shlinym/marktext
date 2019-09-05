@@ -43,9 +43,9 @@
       <toc
         v-else-if="rightColumn === 'toc'"
       ></toc>
-      <side-bar-search
+      <reminder-bar-search
         v-else-if="rightColumn === 'reminder'"
-      ></side-bar-search>
+      ></reminder-bar-search>
     </div>
     <div class="drag-bar" ref="dragBar" v-show="rightColumn"></div>
   </div>
@@ -55,6 +55,7 @@
 import { sideBarIcons, sideBarBottomIcons } from './help'
 import Tree from './tree.vue'
 import SideBarSearch from './search.vue'
+import ReminderBarSearch from './reminder.vue'
 import Toc from './toc.vue'
 import { mapState } from 'vuex'
 
@@ -70,7 +71,8 @@ export default {
   components: {
     Tree,
     SideBarSearch,
-    Toc
+    Toc,
+    ReminderBarSearch
   },
   computed: {
     ...mapState({
