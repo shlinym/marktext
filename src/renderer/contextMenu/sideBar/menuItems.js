@@ -72,7 +72,7 @@ export const REVIEWED = {
   label: 'had reviewed',
   id: 'reviewed',
   click (menuItem, browserWindow) {
-    contextMenu.rename()
+    contextMenu.reviewed()
   }
 }
 

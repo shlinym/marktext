@@ -73,6 +73,7 @@ export const fileMixins = {
       }
     },
     handleSearchResultMenu (event) {
+      this.$store.dispatch('CHANGE_ACTIVE_ITEM', this.searchResult)
       showReminderMenu(event)
     },
     handleFileClick () {

@@ -169,6 +169,14 @@ const actions = {
       commit('SET_RENAME_CACHE', pathname)
       bus.$emit('SIDEBAR::show-rename-input')
     })
+    bus.$on('SIDEBAR::reviewed', () => {
+      const { filePath } = state.activeItem
+      var nodeConsole = require('console')
+      var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
+      myConsole.log(filePath)
+      // commit('SET_RENAME_CACHE', pathname)
+      // bus.$emit('SIDEBAR::show-rename-input')
+    })
   },
 
   CREATE_FILE_DIRECTORY ({ commit, state }, name) {
