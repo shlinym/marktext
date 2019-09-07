@@ -186,15 +186,15 @@ const actions = {
       })
     })
     bus.$on('SIDEBAR::start-review', () => {
-      const { filePath } = state.activeItem
+      const { pathname } = state.activeItem
       var nodeConsole = require('console')
       var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
-      myConsole.log(filePath)
+      myConsole.log(pathname)
       const endOfLine = 'default'
-      myConsole.log('fuckyou')
-      loadMarkdownFile(filePath, endOfLine).then(rawDocument => {
+      myConsole.log('fuckfffffffff')
+      loadMarkdownFile(pathname, endOfLine).then(rawDocument => {
         const markdown = rawDocument.markdown
-        ipcRenderer.send('AGANI::start-review', { filePath, markdown })
+        ipcRenderer.send('AGANI::start-review', { pathname, markdown })
       })
     })
   },

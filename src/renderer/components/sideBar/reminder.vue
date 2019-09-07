@@ -102,7 +102,7 @@ export default {
     this.FindWordIcon = FindWordIcon
     this.FindRegexIcon = FindRegexIcon
     return {
-      keyword: this.lastSearchTime.toLocaleDateString(),
+      keyword: 'True\\n.*' + this.lastSearchTime.toLocaleDateString(),
       searchResult: [],
       searcherRunning: false,
       showSearchCancelArea: false,
@@ -110,7 +110,7 @@ export default {
 
       isCaseSensitive: false,
       isWholeWord: false,
-      isRegexp: false
+      isRegexp: true
     }
   },
   components: {
@@ -248,13 +248,17 @@ export default {
         }
       }
     },
-    refreshSearchResult () {
+    refreshSearchResult (e, pathname) {
       var nodeConsole = require('console')
       var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
       // this.searchResult[0].matches = []
-      myConsole.log(this.searchResult[0])
-      this.searchResult[0].reviewed = 'R'
-      // this.searchResult[0].matches
+      myConsole.log(pathname)
+      var idx = this.searchResult.findIndex((value) => {
+        return value.filePath === pathname
+      })
+      if (idx >= 0) {
+        this.searchResult[idx].reviewed = 'R'
+      }
     },
     /**
      * Slightly delay showing the "cancel search" button so we don't

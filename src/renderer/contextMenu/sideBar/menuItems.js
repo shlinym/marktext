@@ -69,7 +69,7 @@ export const SHOW_IN_FOLDER = {
 }
 
 export const START_REVIEW = {
-  label: 'start review',
+  label: 'Start Review',
   id: 'startReview',
   click (menuItem, browserWindow) {
     contextMenu.startReview()
@@ -77,7 +77,7 @@ export const START_REVIEW = {
 }
 
 export const REVIEWED = {
-  label: 'had reviewed',
+  label: 'Had Reviewed',
   id: 'reviewed',
   click (menuItem, browserWindow) {
     contextMenu.reviewed()
@@ -85,7 +85,7 @@ export const REVIEWED = {
 }
 
 export const REVIEW_LATER = {
-  label: 'do it later',
+  label: 'Do it Later',
   id: 'reviewedLater',
   click (menuItem, browserWindow) {
     contextMenu.rename()

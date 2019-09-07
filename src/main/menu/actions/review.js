@@ -44,32 +44,41 @@ export function updateReviewInfo (content) {
   return newContent
 }
 
-export function startReview(content) {
-  const needHeader = 'Review_need: ';
-  const dateHeader = 'Review_date: ';
-  const timesHeader = 'Review_times: ';
-  var yamlExp = new RegExp('---\n((.|\n)+)---');
-  var needExp = new RegExp('Review_need: (.*)');
-  var dateExp = new RegExp('Review_date: (.*)');
-  var timesExp = new RegExp('Review_times: (.*)');
-  var res;
+export function startReview (content) {
+  const needHeader = 'Review_need: '
+  const dateHeader = 'Review_date: '
+  const timesHeader = 'Review_times: '
+  var yamlExp = new RegExp('---\n((.|\n)+)---')
+  var needExp = new RegExp('Review_need: (.*)')
+  var dateExp = new RegExp('Review_date: (.*)')
+  var timesExp = new RegExp('Review_times: (.*)')
+  var res
+
   if (!yamlExp.test(content ||
     !dateExp.test(content) || !timesExp.test(content))) {
-    return '';
+    return ''
   }
-  var yaml = yamlExp.exec(content)[0];
-  res = dateExp.exec(yaml);
-  var dateString = res[0];
-  var lastDate = new Date(res[1]);
-  res = needExp.exec(yaml);
-  var needString = res[0];
-  res = timesExp.exec(yaml);
-  var timesString = res[0];
-  var newDate = new Date();
-  console.log(newDate.toLocaleDateString());
-  var needContent = content.replace(needString, needHeader + 'True');
-  newContent = content.replace(dateString, dateHeader + newDate.toLocaleDateString());
-  newContent = newContent.replace(timesString, timesHeader + '1');
-  console.log(newContent);
-  return newContent;
+
+  var yaml = yamlExp.exec(content)[0]
+
+  res = needExp.exec(yaml)
+  var needString = res[0]
+
+  res = dateExp.exec(yaml)
+  var dateString = res[0]
+
+  res = timesExp.exec(yaml)
+  var timesString = res[0]
+  var newDate = new Date()
+  newDate.setDate(newDate.getDate() + 1)
+
+  console.log(newDate.toLocaleDateString())
+
+  var newContent = content.replace(needString, needHeader + 'True')
+  newContent = newContent.replace(dateString, dateHeader + newDate.toLocaleDateString())
+  newContent = newContent.replace(timesString, timesHeader + '1')
+
+  console.log(newContent)
+
+  return newContent
 }

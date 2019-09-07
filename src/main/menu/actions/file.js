@@ -204,12 +204,12 @@ ipcMain.on('mt::save-and-close-tabs', async (e, unsavedFiles) => {
   }
 })
 
-ipcMain.on('AGANI::start-review', async (e, { filePath, markdown }) => {
-  const win = BrowserWindow.fromWebContents(e.sender)
+ipcMain.on('AGANI::start-review', async (e, { pathname, markdown }) => {
+  // const win = BrowserWindow.fromWebContents(e.sender)
   var nodeConsole = require('console')
   var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
   myConsole.log('fuck')
-  myConsole.log(filePath)
+  myConsole.log(pathname)
   myConsole.log(markdown)
 
   var newContent = startReview(markdown)
@@ -220,10 +220,9 @@ ipcMain.on('AGANI::start-review', async (e, { filePath, markdown }) => {
   // fs.outputFile(filePath, 'fucy you', 'utf-8')
   myConsole.log('===============')
   myConsole.log(newContent)
-  flushMarkdownFile(filePath, newContent)
+  flushMarkdownFile(pathname, newContent)
     .then(() => {
       // bus.$emit('SIDEBAR::refresh-review-result')
-      win.send('mt::refresh-review-result')
     })
     .catch(err => {
       log.error(err)
@@ -250,7 +249,7 @@ ipcMain.on('AGANI::had-reviewed', async (e, { filePath, markdown }) => {
   flushMarkdownFile(filePath, newContent)
     .then(() => {
       // bus.$emit('SIDEBAR::refresh-review-result')
-      win.send('mt::refresh-review-result')
+      win.send('mt::refresh-review-result', filePath)
     })
     .catch(err => {
       log.error(err)

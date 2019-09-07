@@ -20,6 +20,7 @@ export const showContextMenu = (event, hasPathCache) => {
   const menu = new Menu()
   const win = remote.getCurrentWindow()
   const CONTEXT_ITEMS = [
+    START_REVIEW,
     NEW_FILE,
     NEW_DIRECTORY,
     SEPARATOR,
@@ -30,8 +31,7 @@ export const showContextMenu = (event, hasPathCache) => {
     RENAME,
     DELETE,
     SEPARATOR,
-    SHOW_IN_FOLDER,
-    START_REVIEW
+    SHOW_IN_FOLDER
   ]
 
   PASTE.enabled = hasPathCache
@@ -47,8 +47,7 @@ export const showReminderMenu = (event) => {
   const win = remote.getCurrentWindow()
   const CONTEXT_ITEMS = [
     REVIEWED,
-    REVIEW_LATER,
-    START_REVIEW
+    REVIEW_LATER
   ]
 
   CONTEXT_ITEMS.forEach(item => {
