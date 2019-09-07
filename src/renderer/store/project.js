@@ -5,7 +5,11 @@ import bus from '../bus'
 import { create, paste, rename } from '../util/fileSystem'
 import { PATH_SEPARATOR } from '../config'
 import notice from '../services/notification'
+// import { getFileStateFromData, getOptionsFromState } from './help'
 import { getFileStateFromData } from './help'
+import { loadMarkdownFile } from '../../main/filesystem/markdown'
+// import { getUniqueId } from '../util'
+// import { fs } from 'fs'
 
 const state = {
   activeItem: {},
@@ -174,8 +178,24 @@ const actions = {
       var nodeConsole = require('console')
       var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
       myConsole.log(filePath)
-      // commit('SET_RENAME_CACHE', pathname)
-      // bus.$emit('SIDEBAR::show-rename-input')
+      const endOfLine = 'default'
+      myConsole.log('fuckyou')
+      loadMarkdownFile(filePath, endOfLine).then(rawDocument => {
+        const markdown = rawDocument.markdown
+        ipcRenderer.send('AGANI::had-reviewed', { filePath, markdown })
+      })
+    })
+    bus.$on('SIDEBAR::start-review', () => {
+      const { filePath } = state.activeItem
+      var nodeConsole = require('console')
+      var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
+      myConsole.log(filePath)
+      const endOfLine = 'default'
+      myConsole.log('fuckyou')
+      loadMarkdownFile(filePath, endOfLine).then(rawDocument => {
+        const markdown = rawDocument.markdown
+        ipcRenderer.send('AGANI::start-review', { filePath, markdown })
+      })
     })
   },
 

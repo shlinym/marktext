@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-09-02 22:57:37
+ * @LastEditTime: 2019-09-07 16:19:36
+ * @LastEditors: Please set LastEditors
+ */
 import fs from 'fs'
 import path from 'path'
 import { BrowserWindow, dialog, ipcMain, shell } from 'electron'
@@ -6,9 +13,10 @@ import { isDirectory, isFile } from 'common/filesystem'
 import { MARKDOWN_EXTENSIONS, isMarkdownFile, isMarkdownFileOrLink } from 'common/filesystem/paths'
 import { EXTENSION_HASN, PANDOC_EXTENSIONS, URL_REG } from '../../config'
 import { normalizeAndResolvePath, writeFile } from '../../filesystem'
-import { writeMarkdownFile } from '../../filesystem/markdown'
+import { writeMarkdownFile, flushMarkdownFile } from '../../filesystem/markdown'
 import { getPath, getRecommendTitleFromMarkdownString } from '../../utils'
 import pandoc from '../../utils/pandoc'
+import { updateReviewInfo, startReview } from './review'
 
 // TODO(refactor): "save" and "save as" should be moved to the editor window (editor.js) and
 // the renderer should communicate only with the editor window for file relevant stuff.
@@ -194,6 +202,60 @@ ipcMain.on('mt::save-and-close-tabs', async (e, unsavedFiles) => {
     const tabIds = unsavedFiles.map(f => f.id)
     win.send('mt::force-close-tabs-by-id', tabIds)
   }
+})
+
+ipcMain.on('AGANI::start-review', async (e, { filePath, markdown }) => {
+  const win = BrowserWindow.fromWebContents(e.sender)
+  var nodeConsole = require('console')
+  var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
+  myConsole.log('fuck')
+  myConsole.log(filePath)
+  myConsole.log(markdown)
+
+  var newContent = startReview(markdown)
+  if (newContent === '') {
+    // no yaml header found, return
+    return
+  }
+  // fs.outputFile(filePath, 'fucy you', 'utf-8')
+  myConsole.log('===============')
+  myConsole.log(newContent)
+  flushMarkdownFile(filePath, newContent)
+    .then(() => {
+      // bus.$emit('SIDEBAR::refresh-review-result')
+      win.send('mt::refresh-review-result')
+    })
+    .catch(err => {
+      log.error(err)
+      alert('flush to file fail')
+    })
+})
+
+ipcMain.on('AGANI::had-reviewed', async (e, { filePath, markdown }) => {
+  const win = BrowserWindow.fromWebContents(e.sender)
+  var nodeConsole = require('console')
+  var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
+  myConsole.log('fuck')
+  myConsole.log(filePath)
+  myConsole.log(markdown)
+
+  var newContent = updateReviewInfo(markdown)
+  if (newContent === '') {
+    // no yaml header found, return
+    return
+  }
+  // fs.outputFile(filePath, 'fucy you', 'utf-8')
+  myConsole.log('===============')
+  myConsole.log(newContent)
+  flushMarkdownFile(filePath, newContent)
+    .then(() => {
+      // bus.$emit('SIDEBAR::refresh-review-result')
+      win.send('mt::refresh-review-result')
+    })
+    .catch(err => {
+      log.error(err)
+      alert('flush to file fail')
+    })
 })
 
 ipcMain.on('AGANI::response-file-save-as', async (e, { id, markdown, pathname, options }) => {

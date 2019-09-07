@@ -35,3 +35,7 @@ export const showInFolder = (menuItem, browserWindow) => {
 export const reviewed = (menuItem, browserWindow) => {
   bus.$emit('SIDEBAR::reviewed')
 }
+
+export const startReview = (menuItem, browserWindow) => {
+  bus.$emit('SIDEBAR::start-review')
+}

@@ -66,6 +66,10 @@ export const writeMarkdownFile = (pathname, content, options) => {
   return writeFile(pathname, content, extension)
 }
 
+export const flushMarkdownFile = (pathname, content) => {
+  return fs.outputFile(pathname, content, 'utf-8')
+}
+
 /**
  * Reads the contents of a markdown file.
  *

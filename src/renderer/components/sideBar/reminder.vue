@@ -1,4 +1,3 @@
-
 <template>
     <div
       class="reminder-bar-search"
@@ -89,6 +88,7 @@ import EmptyIcon from '@/assets/icons/undraw_empty.svg'
 import FindCaseIcon from '@/assets/icons/searchIcons/iconCase.svg'
 import FindWordIcon from '@/assets/icons/searchIcons/iconWord.svg'
 import FindRegexIcon from '@/assets/icons/searchIcons/iconRegex.svg'
+import { ipcRenderer } from 'electron'
 
 export default {
   data () {
@@ -192,6 +192,7 @@ export default {
           //   length: 2
           //   trailingContextLines: []
 
+          searchResult.reviewed = 'U'
           newSearchResult.push(searchResult)
         },
         didSearchPaths: numPathsFound => {
@@ -247,6 +248,14 @@ export default {
         }
       }
     },
+    refreshSearchResult () {
+      var nodeConsole = require('console')
+      var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
+      // this.searchResult[0].matches = []
+      myConsole.log(this.searchResult[0])
+      this.searchResult[0].reviewed = 'R'
+      // this.searchResult[0].matches
+    },
     /**
      * Slightly delay showing the "cancel search" button so we don't
      * see it after every keypress, but only when a search query is lagging.
@@ -292,6 +301,8 @@ export default {
   },
   created () { // 在组件初始化的时候执行，只执行一次
     this.search()
+    ipcRenderer.on('mt::refresh-review-result', this.refreshSearchResult)
+    // bus.$on('SIDEBAR::refresh-review-result', this.refreshSearchResult)
   }
 }
 </script>

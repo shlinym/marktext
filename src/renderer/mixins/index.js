@@ -74,7 +74,17 @@ export const fileMixins = {
     },
     handleSearchResultMenu (event) {
       this.$store.dispatch('CHANGE_ACTIVE_ITEM', this.searchResult)
+      // var { filename, matchCount } = this.searchResult
       showReminderMenu(event)
+      var nodeConsole = require('console')
+      var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
+      // myConsole.log(this.searchResult.matches.length)
+      // this.searchResultatches.length = 'R'
+      myConsole.log(this.searchResult.filePath)
+      this.$nextTick(() => {
+        // bus.$emit('SIDEBAR::refresh-review-result')
+        // myConsole.log(this.searchResultInfo)
+      })
     },
     handleFileClick () {
       const { isMarkdown, pathname } = this.file

@@ -68,6 +68,14 @@ export const SHOW_IN_FOLDER = {
   }
 }
 
+export const START_REVIEW = {
+  label: 'start review',
+  id: 'startReview',
+  click (menuItem, browserWindow) {
+    contextMenu.startReview()
+  }
+}
+
 export const REVIEWED = {
   label: 'had reviewed',
   id: 'reviewed',

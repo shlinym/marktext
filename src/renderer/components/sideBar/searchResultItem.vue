@@ -97,7 +97,11 @@ export default {
     },
 
     matchCount () {
-      return this.searchResult.matches.length
+      if ('reviewed' in this.searchResult) {
+        return this.searchResult.reviewed
+      } else {
+        return this.searchResult.matches.length
+      }
     },
 
     // Return the filename extension or null.
