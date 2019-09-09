@@ -65,7 +65,16 @@ export default {
   },
   methods: {
     newFile () {
-      this.$store.dispatch('NEW_UNTITLED_TAB', {})
+      var curDate = new Date()
+      var markdown = ['---\n',
+        'tag: ',
+        'Review_need: Fasle',
+        'Review_date: ' + curDate.toLocaleDateString(),
+        'Review_times: 1',
+        '---\n'].join('\n')
+
+      this.$store.dispatch('NEW_UNTITLED_TAB', { markdown, selected: true })
+      // this.$store.dispatch('NEW_UNTITLED_TAB', {})
     },
     handleTabScroll (event) {
       // Use mouse wheel value first but prioritize X value more (e.g. touchpad input).
