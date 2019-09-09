@@ -111,8 +111,11 @@ const pasteCtrl = ContentState => {
   ContentState.prototype.pasteImage = async function (event) {
     // Try to guess the clipboard file path.
     const imagePath = this.muya.options.clipboardFilePath()
+    var nodeConsole = require('console')
+    var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
     if (imagePath && typeof imagePath === 'string' && IMAGE_EXT_REG.test(imagePath)) {
       const id = `loading-${getUniqueId()}`
+
       if (this.selectedImage) {
         this.replaceImage(this.selectedImage, {
           alt: id,
@@ -124,7 +127,7 @@ const pasteCtrl = ContentState => {
           src: imagePath
         })
       }
-      const nSrc = await this.muya.options.imageAction(imagePath)
+      const nSrc = await this.muya.options.imageAction(imagePath)[0]
       const { src } = getImageSrc(imagePath)
       if (src) {
         this.stateRender.urlMap.set(nSrc, src)
@@ -183,7 +186,9 @@ const pasteCtrl = ContentState => {
       }
       reader.readAsDataURL(file)
 
-      const nSrc = await this.muya.options.imageAction(file)
+      const nSrc = (await this.muya.options.imageAction(file))[0]
+      // const { src } = getImageSrc(nSrc)
+      myConsole.log('path + ' + nSrc)
       const base64 = this.stateRender.urlMap.get(id)
       if (base64) {
         this.stateRender.urlMap.set(nSrc, base64)

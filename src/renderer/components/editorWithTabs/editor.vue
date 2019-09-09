@@ -467,31 +467,35 @@ export default {
       })
     },
     async imageAction (image) {
+      var nodeConsole = require('console')
+      var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
       const { imageInsertAction, imageFolderPath, preferences } = this
       const { pathname } = this.currentFile
+      myConsole.log(imageInsertAction)
+      myConsole.log(imageFolderPath)
       switch (imageInsertAction) {
         case 'upload': {
           try {
             const result = await uploadImage(pathname, image, preferences)
-            return result
+            return [result]
           } catch (err) {
             notice.notify({
               title: 'Upload Image',
               type: 'info',
               message: err
             })
-            return await moveImageToFolder(pathname, image, imageFolderPath)
+            return [await moveImageToFolder(pathname, image, imageFolderPath)]
           }
         }
         case 'folder': {
-          return await moveImageToFolder(pathname, image, imageFolderPath)
+          return [await moveImageToFolder(pathname, image, imageFolderPath)]
         }
         case 'path': {
           if (typeof image === 'string') {
             return image
           } else {
             // Move image to image folder if it's Blob object.
-            return await moveImageToFolder(pathname, image, imageFolderPath)
+            return [await moveImageToFolder(pathname, image, imageFolderPath), imageFolderPath]
           }
         }
       }

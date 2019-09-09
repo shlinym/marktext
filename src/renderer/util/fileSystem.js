@@ -25,10 +25,17 @@ export const rename = (src, dest) => {
 
 export const moveImageToFolder = async (pathname, image, dir) => {
   const isPath = typeof image === 'string'
+
+  var nodeConsole = require('console')
+  var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
+  myConsole.log('11123421423' + isPath)
   if (isPath) {
     const dirname = path.dirname(pathname)
     const imagePath = path.resolve(dirname, image)
     const isImage = isImageFile(imagePath)
+
+    // myConsole.log('1111')
+
     if (isImage) {
       const filename = path.basename(imagePath)
       const extname = path.extname(imagePath)
@@ -39,13 +46,17 @@ export const moveImageToFolder = async (pathname, image, dir) => {
       const hash = getContentHash(imagePath)
       // To avoid name conflict.
       const hashFilePath = path.join(dir, `${hash}${extname}`)
+      myConsole.log('212222')
       await fse.copy(imagePath, hashFilePath)
       return hashFilePath
     } else {
       return Promise.resolve(image)
     }
   } else {
-    const imagePath = path.join(dir, `${dayjs().format('YYYY-MM-DD-HH-mm-ss')}-${image.name}`)
+    const absoluteImagePath = path.join(dir, `${dayjs().format('YYYY-MM-DD-HH-mm-ss')}-${image.name}`)
+    // const relativeImagePath = path.join('', `${dayjs().format('YYYY-MM-DD-HH-mm-ss')}-${image.name}`)
+    myConsole.log('111')
+    myConsole.log(absoluteImagePath)
 
     const binaryString = await new Promise((resolve, reject) => {
       const fileReader = new FileReader()
@@ -55,8 +66,9 @@ export const moveImageToFolder = async (pathname, image, dir) => {
 
       fileReader.readAsBinaryString(image)
     })
-    await fse.writeFile(imagePath, binaryString, 'binary')
-    return imagePath
+    await fse.writeFile(absoluteImagePath, binaryString, 'binary')
+    // return relativeImagePath
+    return absoluteImagePath
   }
 }
 

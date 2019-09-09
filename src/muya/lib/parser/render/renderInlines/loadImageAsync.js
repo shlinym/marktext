@@ -3,9 +3,12 @@ import { insertAfter, operateClassName } from '../../../utils/domManipulate'
 import { CLASS_OR_ID } from '../../../config'
 
 export default function loadImageAsync (imageInfo, alt, className, imageClass) {
-  const { src, isUnknownType } = imageInfo
+  var { src } = imageInfo
+  const { isUnknownType } = imageInfo
   let id
   let isSuccess
+  var nodeConsole = require('console')
+  var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
 
   if (!this.loadImageMap.has(src)) {
     id = getUniqueId()
@@ -61,7 +64,11 @@ export default function loadImageAsync (imageInfo, alt, className, imageClass) {
         })
       })
   } else {
+    // src = 'file:///Users/shlin/tmp/test/assert/' + src
+    src = 'file:///Users/shlin/tmp/test/assert/2019-09-10-00-37-52-image.png'
+    myConsole.log(src)
     const imageInfo = this.loadImageMap.get(src)
+    myConsole.log(imageInfo)
     id = imageInfo.id
     isSuccess = imageInfo.isSuccess
   }
