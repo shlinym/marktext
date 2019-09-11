@@ -188,7 +188,7 @@ const pasteCtrl = ContentState => {
 
       const nSrc = await this.muya.options.imageAction(file)
       myConsole.log('path + ' + nSrc)
-      myConsole.log('root path + ' + this.muya.options.imageFolderPath)
+      myConsole.log('root path + ' + id)
       // const folderPath = this.muya.options.imageFolderPath
       const base64 = this.stateRender.urlMap.get(id)
       if (base64) {

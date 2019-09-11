@@ -35,9 +35,18 @@ export default function image (h, cursor, block, token, outerClass) {
   let { src } = imageInfo
   const alt = token.alt + encodeURI(token.backlash.first)
   const { title } = token
-  // var nodeConsole = require('console')
-  // var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
-  // myConsole.log('0000ffff' + this.muya.options.imageFolderPath)
+  var nodeConsole = require('console')
+  var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
+
+  var patt = /\/\d.*\.png/
+  var imageName
+  if (patt.test(src)) {
+    imageName = patt.exec(src)[0]
+    src = imageName.substring(1)
+    myConsole.log('11image name :' + src)
+  }
+
+  myConsole.log('fuck image func + ' + src)
   // if (!src.includes(this.muya.options.imageFolderPath)) {
   //   (imageInfo.src = this.muya.options.imageFolderPath + '/' + src)
   // }
@@ -62,6 +71,7 @@ export default function image (h, cursor, block, token, outerClass) {
   }
 
   // the src image is still loading, so use the url Map base64.
+  myConsole.log('image map:' + [...this.urlMap.keys()])
   if (this.urlMap.has(src)) {
     // fix: it will generate a new id if the image is not loaded.
     const { selectedImage } = this.muya.contentState

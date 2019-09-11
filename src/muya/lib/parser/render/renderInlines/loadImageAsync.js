@@ -12,6 +12,7 @@ export default function loadImageAsync (imageInfo, alt, className, imageClass) {
 
   myConsole.log('0000' + this.muya.options.imageFoldPath)
   if (!this.loadImageMap.has(src)) {
+    myConsole.log('aaload without path + ' + src)
     id = getUniqueId()
     loadImage(src, isUnknownType)
       .then(url => {
@@ -67,7 +68,7 @@ export default function loadImageAsync (imageInfo, alt, className, imageClass) {
   } else {
     // src = 'file:///Users/lin/tmp/test/assert/' + src
     // src = 'file:///Users/shlin/tmp/test/assert/2019-09-10-00-37-52-image.png'
-    myConsole.log('fjsklfs + ' + src)
+    myConsole.log('load without path + ' + src)
     const imageInfo = this.loadImageMap.get(src)
     myConsole.log(imageInfo)
     id = imageInfo.id

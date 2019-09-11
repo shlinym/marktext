@@ -2,7 +2,7 @@ import { getUniqueId, loadImage } from '../../../utils'
 import { insertAfter, operateClassName } from '../../../utils/domManipulate'
 import { CLASS_OR_ID } from '../../../config'
 
-export default function loadImageAsyncWithPath (imageForderPath, imageInfo, alt, className, imageClass) {
+export default function loadImageAsyncWithPath (imageFolderPath, imageInfo, alt, className, imageClass) {
   var { src } = imageInfo
   const { isUnknownType } = imageInfo
   let id
@@ -11,20 +11,22 @@ export default function loadImageAsyncWithPath (imageForderPath, imageInfo, alt,
   var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
 
   myConsole.log('fuck0000' + src)
-  myConsole.log('fuck2220000' + imageForderPath)
-  myConsole.log('fuck1110000' + src.includes(imageForderPath))
-  var patt = /\d.*\.png/
+  var patt = /\/\d.*\.png/
   var imageName
   if (patt.test(src)) {
     imageName = patt.exec(src)[0]
-    src = 'file://' + imageForderPath + '/' + imageName
+    // src = imageName.substring(1)
+    src = 'file://' + imageFolderPath + imageName
+    myConsole.log('image name :' + src)
   } else {
-    src = 'file://' + imageForderPath + '/' + src
+    src = 'file://' + imageFolderPath + '/' + src
   }
+  // src = 'file://' + imageFolderPath + '/' + src
 
-  myConsole.log('0000' + src)
   if (!this.loadImageMap.has(src)) {
     id = getUniqueId()
+    myConsole.log('try to load iamge: ' + id)
+    // loadImage('file://' + imageFolderPath + '/' + src, isUnknownType)
     loadImage(src, isUnknownType)
       .then(url => {
         const imageText = document.querySelector(`#${id}`)
@@ -35,8 +37,11 @@ export default function loadImageAsyncWithPath (imageForderPath, imageInfo, alt,
           img.classList.add(imageClass)
         }
 
+        myConsole.log('stage1')
         if (imageText) {
+          myConsole.log('stage2')
           if (imageText.classList.contains('ag-inline-image')) {
+            myConsole.log('stage3')
             const imageContainer = imageText.querySelector('.ag-image-container')
             const oldImage = imageContainer.querySelector('img')
             if (oldImage) {
@@ -46,6 +51,7 @@ export default function loadImageAsyncWithPath (imageForderPath, imageInfo, alt,
             imageText.classList.remove('ag-image-loading')
             imageText.classList.add('ag-image-success')
           } else {
+            myConsole.log('stage4')
             insertAfter(img, imageText)
             operateClassName(imageText, 'add', className)
           }
@@ -60,6 +66,7 @@ export default function loadImageAsyncWithPath (imageForderPath, imageInfo, alt,
       })
       .catch(() => {
         const imageText = document.querySelector(`#${id}`)
+        myConsole.log('stage5')
         if (imageText) {
           operateClassName(imageText, 'remove', CLASS_OR_ID.AG_IMAGE_LOADING)
           operateClassName(imageText, 'add', CLASS_OR_ID.AG_IMAGE_FAIL)
@@ -77,9 +84,9 @@ export default function loadImageAsyncWithPath (imageForderPath, imageInfo, alt,
         })
       })
   } else {
-    // src = 'file:///Users/lin/tmp/test/assert/' + src
-    // src = 'file:///Users/shlin/tmp/test/assert/2019-09-10-00-37-52-image.png'
-    myConsole.log('fjsklfs + ' + src)
+    myConsole.log('stage6 : ' + src)
+    myConsole.log('load image map:' + [...this.loadImageMap.keys()])
+    myConsole.log('load map:' + [...this.urlMap.keys()])
     const imageInfo = this.loadImageMap.get(src)
     myConsole.log(imageInfo)
     id = imageInfo.id
