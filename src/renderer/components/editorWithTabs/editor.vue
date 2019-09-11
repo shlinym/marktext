@@ -349,7 +349,8 @@ export default {
         imageAction: this.imageAction.bind(this),
         imagePathPicker: this.imagePathPicker.bind(this),
         clipboardFilePath: guessClipboardFilePath,
-        imagePathAutoComplete: this.imagePathAutoComplete.bind(this)
+        imagePathAutoComplete: this.imagePathAutoComplete.bind(this),
+        imageFolderPath: this.imageFolderPath
       }
       if (/dark/i.test(theme)) {
         Object.assign(options, {
@@ -477,25 +478,25 @@ export default {
         case 'upload': {
           try {
             const result = await uploadImage(pathname, image, preferences)
-            return [result]
+            return result
           } catch (err) {
             notice.notify({
               title: 'Upload Image',
               type: 'info',
               message: err
             })
-            return [await moveImageToFolder(pathname, image, imageFolderPath)]
+            return await moveImageToFolder(pathname, image, imageFolderPath)
           }
         }
         case 'folder': {
-          return [await moveImageToFolder(pathname, image, imageFolderPath)]
+          return await moveImageToFolder(pathname, image, imageFolderPath)
         }
         case 'path': {
           if (typeof image === 'string') {
             return image
           } else {
             // Move image to image folder if it's Blob object.
-            return [await moveImageToFolder(pathname, image, imageFolderPath), imageFolderPath]
+            return await moveImageToFolder(pathname, image, imageFolderPath)
           }
         }
       }

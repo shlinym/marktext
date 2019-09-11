@@ -54,7 +54,7 @@ export const moveImageToFolder = async (pathname, image, dir) => {
     }
   } else {
     const absoluteImagePath = path.join(dir, `${dayjs().format('YYYY-MM-DD-HH-mm-ss')}-${image.name}`)
-    // const relativeImagePath = path.join('', `${dayjs().format('YYYY-MM-DD-HH-mm-ss')}-${image.name}`)
+    const relativeImagePath = path.join('', `${dayjs().format('YYYY-MM-DD-HH-mm-ss')}-${image.name}`)
     myConsole.log('111')
     myConsole.log(absoluteImagePath)
 
@@ -67,8 +67,8 @@ export const moveImageToFolder = async (pathname, image, dir) => {
       fileReader.readAsBinaryString(image)
     })
     await fse.writeFile(absoluteImagePath, binaryString, 'binary')
-    // return relativeImagePath
-    return absoluteImagePath
+    return relativeImagePath
+    // return absoluteImagePath
   }
 }
 

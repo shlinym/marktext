@@ -127,7 +127,7 @@ const pasteCtrl = ContentState => {
           src: imagePath
         })
       }
-      const nSrc = await this.muya.options.imageAction(imagePath)[0]
+      const nSrc = await this.muya.options.imageAction(imagePath)
       const { src } = getImageSrc(imagePath)
       if (src) {
         this.stateRender.urlMap.set(nSrc, src)
@@ -186,9 +186,10 @@ const pasteCtrl = ContentState => {
       }
       reader.readAsDataURL(file)
 
-      const nSrc = (await this.muya.options.imageAction(file))[0]
-      // const { src } = getImageSrc(nSrc)
+      const nSrc = await this.muya.options.imageAction(file)
       myConsole.log('path + ' + nSrc)
+      myConsole.log('root path + ' + this.muya.options.imageFolderPath)
+      // const folderPath = this.muya.options.imageFolderPath
       const base64 = this.stateRender.urlMap.get(id)
       if (base64) {
         this.stateRender.urlMap.set(nSrc, base64)

@@ -2,7 +2,7 @@ import { getUniqueId, loadImage } from '../../../utils'
 import { insertAfter, operateClassName } from '../../../utils/domManipulate'
 import { CLASS_OR_ID } from '../../../config'
 
-export default function loadImageAsync (imageInfo, alt, className, imageClass) {
+export default function loadImageAsyncWithPath (imageForderPath, imageInfo, alt, className, imageClass) {
   var { src } = imageInfo
   const { isUnknownType } = imageInfo
   let id
@@ -10,7 +10,19 @@ export default function loadImageAsync (imageInfo, alt, className, imageClass) {
   var nodeConsole = require('console')
   var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
 
-  myConsole.log('0000' + this.muya.options.imageFoldPath)
+  myConsole.log('fuck0000' + src)
+  myConsole.log('fuck2220000' + imageForderPath)
+  myConsole.log('fuck1110000' + src.includes(imageForderPath))
+  var patt = /\d.*\.png/
+  var imageName
+  if (patt.test(src)) {
+    imageName = patt.exec(src)[0]
+    src = 'file://' + imageForderPath + '/' + imageName
+  } else {
+    src = 'file://' + imageForderPath + '/' + src
+  }
+
+  myConsole.log('0000' + src)
   if (!this.loadImageMap.has(src)) {
     id = getUniqueId()
     loadImage(src, isUnknownType)

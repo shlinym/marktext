@@ -12,6 +12,7 @@ import codeFense from './codeFense'
 import inlineMath from './inlineMath'
 import autoLink from './autoLink'
 import loadImageAsync from './loadImageAsync'
+import loadImageAsyncWithPath from './loadImageAsyncWithPath'
 import htmlImage from './htmlImage'
 import image from './image'
 import delEmStrongFac from './delEmStringFactory'
@@ -43,6 +44,7 @@ export default {
   inlineMath,
   autoLink,
   loadImageAsync,
+  loadImageAsyncWithPath,
   htmlImage,
   image,
   delEmStrongFac,

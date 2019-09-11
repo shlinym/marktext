@@ -35,8 +35,14 @@ export default function image (h, cursor, block, token, outerClass) {
   let { src } = imageInfo
   const alt = token.alt + encodeURI(token.backlash.first)
   const { title } = token
+  // var nodeConsole = require('console')
+  // var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
+  // myConsole.log('0000ffff' + this.muya.options.imageFolderPath)
+  // if (!src.includes(this.muya.options.imageFolderPath)) {
+  //   (imageInfo.src = this.muya.options.imageFolderPath + '/' + src)
+  // }
   if (src) {
-    ({ id, isSuccess } = this.loadImageAsync(imageInfo, alt))
+    ({ id, isSuccess } = this.loadImageAsyncWithPath(this.muya.options.imageFolderPath, imageInfo, alt))
   }
   let wrapperSelector = id
     ? `span#${id}.${CLASS_OR_ID.AG_INLINE_IMAGE}`
