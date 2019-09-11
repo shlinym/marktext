@@ -10,7 +10,7 @@ export default function loadImageAsyncWithPath (imageFolderPath, imageInfo, alt,
   var nodeConsole = require('console')
   var myConsole = new nodeConsole.Console(process.stdout, process.stderr)
 
-  myConsole.log('fuck0000' + src)
+  myConsole.log('fuck0000' + imageFolderPath)
   var patt = /\/\d.*\.png/
   var imageName
   if (patt.test(src)) {
@@ -50,6 +50,8 @@ export default function loadImageAsyncWithPath (imageFolderPath, imageInfo, alt,
             imageContainer.appendChild(img)
             imageText.classList.remove('ag-image-loading')
             imageText.classList.add('ag-image-success')
+
+            this.urlMap.set(imageName.substring(1), src)
           } else {
             myConsole.log('stage4')
             insertAfter(img, imageText)
@@ -57,6 +59,7 @@ export default function loadImageAsyncWithPath (imageFolderPath, imageInfo, alt,
           }
         }
         if (this.urlMap.has(src)) {
+          myConsole.log('try to delete urlmap')
           this.urlMap.delete(src)
         }
         this.loadImageMap.set(src, {
