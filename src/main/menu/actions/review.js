@@ -20,9 +20,11 @@ export function updateReviewInfo (content) {
   }
 
   var yaml = yamlExp.exec(content)[0]
+
   res = dateExp.exec(yaml)
   var dateString = res[0]
-  var lastDate = new Date(res[1])
+  // use today rather than lastDate, so review will restart in furture
+  // var lastDate = new Date(res[1])
 
   res = timesExp.exec(yaml)
   var timesString = res[0]
@@ -34,8 +36,8 @@ export function updateReviewInfo (content) {
   }
 
   var newDate = new Date()
-  newDate.setDate(lastDate.getDate() + reviewDuration[lastTimes - 1])
-  console.log(newDate.toLocaleDateString())
+  newDate.setDate(newDate.getDate() + reviewDuration[lastTimes - 1])
+  console.log('update to new date' + newDate.toLocaleDateString())
 
   var newContent = content.replace(dateString, dateHeader + newDate.toLocaleDateString())
   newContent = newContent.replace(timesString, timesHeader + (lastTimes + 1))
