@@ -1,6 +1,6 @@
 import { getUniqueId, loadImage } from '../../../utils'
 import { insertAfter, operateClassName } from '../../../utils/domManipulate'
-import { CLASS_OR_ID } from '../../../config'
+// import { CLASS_OR_ID } from '../../../config'
 
 export default function loadImageAsyncWithPath (imageFolderPath, imageInfo, alt, className, imageClass) {
   var { src } = imageInfo
@@ -14,11 +14,12 @@ export default function loadImageAsyncWithPath (imageFolderPath, imageInfo, alt,
   var patt = /\/\d.*\.png/
   var imageName
   if (patt.test(src)) {
-    imageName = patt.exec(src)[0]
+    imageName = patt.exec(src)[0].substring(1)
     // src = imageName.substring(1)
-    src = 'file://' + imageFolderPath + imageName
+    src = 'file://' + imageFolderPath + '/' + imageName
     myConsole.log('image name :' + src)
   } else {
+    imageName = src
     src = 'file://' + imageFolderPath + '/' + src
   }
   // src = 'file://' + imageFolderPath + '/' + src
@@ -51,7 +52,7 @@ export default function loadImageAsyncWithPath (imageFolderPath, imageInfo, alt,
             imageText.classList.remove('ag-image-loading')
             imageText.classList.add('ag-image-success')
 
-            this.urlMap.set(imageName.substring(1), src)
+            this.urlMap.set(imageName, src)
           } else {
             myConsole.log('stage4')
             insertAfter(img, imageText)
@@ -67,24 +68,24 @@ export default function loadImageAsyncWithPath (imageFolderPath, imageInfo, alt,
           isSuccess: true
         })
       })
-      .catch(() => {
-        const imageText = document.querySelector(`#${id}`)
-        myConsole.log('stage5')
-        if (imageText) {
-          operateClassName(imageText, 'remove', CLASS_OR_ID.AG_IMAGE_LOADING)
-          operateClassName(imageText, 'add', CLASS_OR_ID.AG_IMAGE_FAIL)
-          const image = imageText.querySelector('img')
-          if (image) {
-            image.remove()
-          }
-        }
-        if (this.urlMap.has(src)) {
-          this.urlMap.delete(src)
-        }
-        this.loadImageMap.set(src, {
-          id,
-          isSuccess: false
-        })
+      .catch((error) => {
+        // const imageText = document.querySelector(`#${id}`)
+        myConsole.log('stage5' + error)
+        // if (imageText) {
+        //   operateClassName(imageText, 'remove', CLASS_OR_ID.AG_IMAGE_LOADING)
+        //   operateClassName(imageText, 'add', CLASS_OR_ID.AG_IMAGE_FAIL)
+        //   const image = imageText.querySelector('img')
+        //   if (image) {
+        //     image.remove()
+        //   }
+        // }
+        // if (this.urlMap.has(src)) {
+        //   this.urlMap.delete(src)
+        // }
+        // this.loadImageMap.set(src, {
+        //   id,
+        //   isSuccess: false
+        // })
       })
   } else {
     myConsole.log('stage6 : ' + src)
@@ -96,5 +97,7 @@ export default function loadImageAsyncWithPath (imageFolderPath, imageInfo, alt,
     isSuccess = imageInfo.isSuccess
   }
 
+  myConsole.log('id ' + id)
+  myConsole.log('succ ' + isSuccess)
   return { id, isSuccess }
 }
